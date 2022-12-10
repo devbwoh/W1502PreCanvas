@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,10 +20,10 @@ namespace W1502PreCanvas
 {
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        const double RADIUS = 50;
+        //const double RADIUS = 50;
 
-        public double CenterX { get; set; }
-        public double CenterY { get; set; }
+        //public double CenterX { get; set; }
+        //public double CenterY { get; set; }
 
         // prop 탭 2번
         //public double PosX { get; set; }
@@ -36,11 +37,11 @@ namespace W1502PreCanvas
             get { return _pos; }
             set { 
                 _pos = value;
-                CenterX = _pos.X - RADIUS;
-                CenterY = _pos.Y - RADIUS;
+                //CenterX = _pos.X - RADIUS;
+                //CenterY = _pos.Y - RADIUS;
                 OnPropertyChanged("Pos");
-                OnPropertyChanged("CenterX");
-                OnPropertyChanged("CenterY");
+                //OnPropertyChanged("CenterX");
+                //OnPropertyChanged("CenterY");
             }
         }
 
@@ -78,6 +79,21 @@ namespace W1502PreCanvas
                 return;
             Pos = e.GetPosition(this);
 
+        }
+    }
+
+    public class Center : IValueConverter
+    {
+        const double RADIUS = 50;
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (double)value - RADIUS;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (double)value + RADIUS;
         }
     }
 }
