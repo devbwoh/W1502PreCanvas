@@ -30,30 +30,43 @@ namespace W1502PreCanvas
         //public double PosY { get; set; }
 
         // propfull 탭 2번
-        private Point _pos;
+        private Point _posZudah;
 
-        public Point Pos
+        public Point PosZudah
         {
-            get { return _pos; }
+            get { return _posZudah; }
             set { 
-                _pos = value;
+                _posZudah = value;
                 //CenterX = _pos.X - RADIUS;
                 //CenterY = _pos.Y - RADIUS;
-                OnPropertyChanged("Pos");
+                OnPropertyChanged("PosZudah");
                 //OnPropertyChanged("CenterX");
                 //OnPropertyChanged("CenterY");
             }
         }
 
+        private Point _posKampfer;
+
+        public Point PosKampfer
+        {
+            get { return _posKampfer; }
+            set
+            {
+                _posKampfer = value;
+                OnPropertyChanged("PosKampfer");
+            }
+        }
+
+        private Image? MovingImage = null;
         private Boolean IsMoving = false;
 
         public MainWindow()
         {
             InitializeComponent();
             DataContext = this;
-            //PosX = 200;
-            //PosY = 200;
-            Pos = new Point(200, 200);
+
+            PosZudah = new Point(200, 200);
+            PosKampfer = new Point(400, 200);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -64,12 +77,12 @@ namespace W1502PreCanvas
 
         private void OnMouseDown(object sender, MouseButtonEventArgs e)
         {
-            //MessageBox.Show("마우스 버튼 Down");
+            MovingImage = (Image)sender;
             IsMoving = true;
         }
         private void OnMouseUp(object sender, MouseButtonEventArgs e)
         {
-            //MessageBox.Show("마우스 버튼 Up");
+            MovingImage = null;
             IsMoving = false;
         }
 
@@ -77,8 +90,18 @@ namespace W1502PreCanvas
         {
             if (!IsMoving)
                 return;
-            Pos = e.GetPosition(this);
 
+            switch (MovingImage?.Name)
+            {
+                case "Zudah": 
+                    PosZudah = e.GetPosition(this); 
+                    break;
+                case "Kampfer":
+                    PosKampfer = e.GetPosition(this);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
