@@ -18,6 +18,7 @@ using System.Windows.Shapes;
 
 namespace W1502PreCanvas
 {
+
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
         //const double RADIUS = 50;
@@ -59,6 +60,7 @@ namespace W1502PreCanvas
 
         private Image? MovingImage = null;
         private Boolean IsMoving = false;
+        private Point PosDiff = new Point(0, 0);
 
         public MainWindow()
         {
@@ -79,6 +81,8 @@ namespace W1502PreCanvas
         {
             MovingImage = (Image)sender;
             IsMoving = true;
+
+            PosDiff = e.GetPosition(MovingImage);
         }
         private void OnMouseUp(object sender, MouseButtonEventArgs e)
         {
@@ -91,13 +95,17 @@ namespace W1502PreCanvas
             if (!IsMoving)
                 return;
 
+            Point p = new Point(
+                e.GetPosition(this).X + Center.RADIUS - PosDiff.X,
+                e.GetPosition(this).Y + Center.RADIUS - PosDiff.Y);
+
             switch (MovingImage?.Name)
             {
-                case "Zudah": 
-                    PosZudah = e.GetPosition(this); 
+                case "Zudah":
+                    PosZudah = p;
                     break;
                 case "Kampfer":
-                    PosKampfer = e.GetPosition(this);
+                    PosKampfer = p;
                     break;
                 default:
                     break;
@@ -107,7 +115,7 @@ namespace W1502PreCanvas
 
     public class Center : IValueConverter
     {
-        const double RADIUS = 50;
+        public const double RADIUS = 50;
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
