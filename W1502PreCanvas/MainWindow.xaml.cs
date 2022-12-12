@@ -1,20 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace W1502PreCanvas
 {
@@ -40,7 +30,7 @@ namespace W1502PreCanvas
                 _posZudah = value;
                 //CenterX = _pos.X - RADIUS;
                 //CenterY = _pos.Y - RADIUS;
-                OnPropertyChanged("PosZudah");
+                OnPropertyChanged(nameof(PosZudah));
                 //OnPropertyChanged("CenterX");
                 //OnPropertyChanged("CenterY");
             }
@@ -54,7 +44,7 @@ namespace W1502PreCanvas
             set
             {
                 _posKampfer = value;
-                OnPropertyChanged("PosKampfer");
+                OnPropertyChanged(nameof(PosKampfer));
             }
         }
 
